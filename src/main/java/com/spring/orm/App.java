@@ -5,6 +5,11 @@ import com.spring.orm.entities.Student;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * Hello world!
  *
@@ -15,8 +20,78 @@ public class App
     {
         ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
         StudentDao studentDao = context.getBean("studentDao", StudentDao.class);
-        Student student = new Student(1, "Jay", "Delhi");
-        int result = studentDao.insert(student);
-        System.out.println("Data inserted.."+result);
+
+        System.out.println("*********Welcome to Spring ORM Application*********");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        boolean go = true;
+
+        while (go) {
+            System.out.println("Press 1 for add new student");
+            System.out.println("Press 2 for fetch all student");
+            System.out.println("Press 3 for fetch single student");
+            System.out.println("Press 4 for delete student");
+            System.out.println("Press 5 for update student");
+            System.out.println("Press 6 for exit student");
+
+            try {
+                int Input = Integer.parseInt(br.readLine());
+
+                switch (Input) {
+                    case 1:
+                        //Insert data
+                        System.out.println("Enter the Student ID, Name and City you want to Update:");
+                        Scanner sc1 = new Scanner(System.in);
+                        int id1=sc1.nextInt();
+                        String name1 = sc1.next();
+                        String city1 = sc1.next();
+                        Student student = new Student(id1, name1, city1);
+                        int result = studentDao.insert(student);
+                        System.out.println("Data inserted.."+result);
+                        break;
+                    case 2:
+                        //Fetch all data
+                        List<Student> student2 = studentDao.getAllStudents();
+                        for(Student s:student2)
+                        {
+                            System.out.println(s);
+                        }
+                        break;
+                    case 3:
+                        //Fetch single data
+                        Scanner sc3=new Scanner(System.in);
+                        int id3=sc3.nextInt();
+                        Student student3 = studentDao.getStudent(id3);
+                        System.out.println(student3);
+                        break;
+                    case 4:
+                        //Delete data
+                        System.out.println("Enter the Student ID you want to Delete:");
+                        Scanner sc4=new Scanner(System.in);
+                        int id4=sc4.nextInt();
+                        studentDao.deleteStudent(id4);
+                        System.out.println("Delete Record Successfully");
+                        break;
+                    case 5:
+                        //Update data
+                        System.out.println("Enter the Student ID, Name and City you want to Update:");
+                        Scanner sc5 = new Scanner(System.in);
+                        int id5=sc5.nextInt();
+                        String name5 = sc5.next();
+                        String city5 = sc5.next();
+                        Student student5 = new Student(id5, name5, city5);
+                        studentDao.updateStudent(student5);
+                        break;
+                    case 6:
+                        //Exit
+                        go = false;
+                        break;
+                }
+            }catch (Exception e) {
+                System.out.println("Invalid input please select another..");
+                System.out.println(e.getMessage());
+            }
+        }
+        System.out.println("Thank you so much for using my application");
     }
 }
