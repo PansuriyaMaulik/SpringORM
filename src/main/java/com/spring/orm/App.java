@@ -55,14 +55,14 @@ public class App
                         List<Student> student2 = studentDao.getAllStudents();
                         for(Student s:student2)
                         {
-                            System.out.println(s);
+                            System.out.println("Id: "+s.getStudentId() +" "+"Name: "+s.getName() + " " + "City: "+s.getCity());
                         }
                         break;
                     case 3:
                         //Fetch single data
                         int id3=sc.nextInt();
                         Student student3 = studentDao.getStudent(id3);
-                        System.out.println(student3);
+                        System.out.println("Id: "+student3.getStudentId() +" "+"Name: "+student3.getName() + " " + "City: "+student3.getCity());
                         break;
                     case 4:
                         //Delete data
